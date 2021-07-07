@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>Login</title>
+    </head>
+    <body>
+        <div>
+            <h1>Login</h1>
+        </div>
+        <div>
+            <form id='login-form' action="{% url 'user:login' %}" method="POST">
+                {% csrf_token %}
+                <input type="email" placeholder="email" name="email" required><br>
+                <input type="password" placeholder="password" name="password" required><br>
+                {% if not form.is_valid %}
+                    <p>
+                        {{ error }}
+                    </p>
+                {% endif %}
+                {% if form.errors %}
+                    <p class>
+                        <!-- Your email and password didn't match.
+                        Please try again. -->
+                        Email not registered.
+                    </p>
+                {% endif %}
+                <input type="hidden" name="next" value="{{ next }}" />
+                <input type="submit" value="login" id="submit">
+            </form>
+            <p>Don't have an account? <a href="{% url 'user:register' %}" class="login">Register</a></p>
+        </div>
+    </body>
+</html>
