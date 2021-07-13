@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
-from user.models import User
 from django.contrib.auth import login, authenticate
 from django.http import HttpResponseForbidden
 from .forms import SignUpForm
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def login_view(request):
@@ -37,3 +37,9 @@ def register_view(request):
     else:
         form = SignUpForm()
     return render(request, 'user/register.html', {'form': form})
+
+@login_required
+def my_profile(request):
+    user = request.user
+    return render(request, 'user/profile.html', {'user': user})
+

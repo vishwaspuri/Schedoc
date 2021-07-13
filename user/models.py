@@ -103,6 +103,7 @@ class User(AbstractBaseUser):
     def is_active(self):
         "Is the user active?"
         return self.active
+
     def to_dict(self):
         user_dict={
             'name': self.full_name,

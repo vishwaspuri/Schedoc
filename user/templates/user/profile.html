@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <title>
+            My Profile
+        </title>
+    </head>
+    <body>
+        <ul>
+            <li><a href={% url 'appointment:home' %}>Home</a></li>
+        </ul>
+        {% if user.type != 1 %}
+            <p>Hello, Doctor!</p>
+        {% endif %}
+        <table>
+            <tr>
+                <td>Name:</td>
+                <td>{{ user.full_name }}</td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <td>Phone Number:</td>
+                <td>{{ user.ph_number }}</td>
+            </tr>
+            <tr>
+                {% if user.type == 1 %}
+                    <td>User Type:</td>
+                    <td>Patient</td>
+                {% elif user.type == 2 %}
+                    <td>Speciality:</td>
+                    <td>Physician</td>
+                {% elif user.type == 3 %}
+                    <td>Speciality:</td>
+                    <td>Cardiology</td>
+                {% elif user.type == 4 %}
+                    <td>Speciality:</td>
+                    <td>Ophthalmology</td>
+                {% endif %}
+            </tr>
+        </table>
+    </body>
+</html>

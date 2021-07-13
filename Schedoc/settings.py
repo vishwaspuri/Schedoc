@@ -74,7 +74,8 @@ TEMPLATES = [
 ]
 AUTH_USER_MODEL = "user.User"
 WSGI_APPLICATION = 'Schedoc.wsgi.application'
-
+LOGIN_URL = "/user/login"
+LOGIN_REDIRECT_URL = "/home"
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
