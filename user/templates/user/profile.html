@@ -1,17 +1,10 @@
-<html>
-    <head>
-        <title>
-            My Profile
-        </title>
-    </head>
-    <body>
-        <ul>
-            <li><a href={% url 'appointment:home' %}>Home</a></li>
-        </ul>
+{% extends "appointment/base.html" %}
+{% block content %}
+    <div class="container">
         {% if user.type != 1 %}
             <p>Hello, Doctor!</p>
         {% endif %}
-        <table>
+        <table class="table">
             <tr>
                 <td>Name:</td>
                 <td>{{ user.full_name }}</td>
@@ -24,7 +17,7 @@
                 <td>Phone Number:</td>
                 <td>{{ user.ph_number }}</td>
             </tr>
-            <tr>
+            <tr class=>
                 {% if user.type == 1 %}
                     <td>User Type:</td>
                     <td>Patient</td>
@@ -40,5 +33,5 @@
                 {% endif %}
             </tr>
         </table>
-    </body>
-</html>
+    </div>
+{% endblock content %}

@@ -1,0 +1,34 @@
+{% extends 'appointment/base.html' %}
+{% block content %}
+    <div class="container">
+        <br>
+        <h3>Find a doctor:</h3>
+        <form action={% url 'appointment:find-doctor' %} method="POST">
+            {% csrf_token %}
+            <Label for="speciality">Choose Speciality needed:</Label>
+            <select id="speciality" name="speciality" required>
+                <option value="2">Specialist-Physician</option>
+                <option value="3">Specialist-Cardiology</option>
+                <option value="4">Specialist-Ophthalmology</option>
+            </select>
+            <br>
+            <label for="appointmentDate">Please select appointment date:</label>
+            <input type="date" id="appointmentDate" name="appointmentDate" required>
+            <br>
+            <input type="hidden" name="next" value="{{ next }}"/>
+            <input type="submit" id="submit">
+        </form>
+        <br>
+        <div class="results">
+            {% if resultPresent == True %}
+                <h3>Available {{ speciality }}s:</h3>
+                {% for doctor in doctors %}
+                    <div class="container bg-light border rounded">
+                        Name: Dr. {{ doctor.full_name }}<br>
+                        <a href={% url 'appointment:select-slots' date=appointment_date doctor_id=doctor.id %}>Book Slot</a>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock content %}

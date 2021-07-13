@@ -1,22 +1,14 @@
-<html>
-    <head>
-        <title>
-            Homepage
-        </title>
-    </head>
-    <body>
-        <h1>Congrats, you are logged in!</h1>
+{% extends "appointment/base.html" %}
+{% block content %}
+    <div class="container">
         <ul>
-            <li><a href={% url 'user:logout' %}>Logout</a></li>
-            <li><a href={% url 'user:profile' %}>My Profile</a></li>
             {% if user.type == 1 %}
-                <li><a>My history</a></li>
-                <li><a>Book an Appointment</a></li>
+                <li><a href={% url 'appointment:find-doctor' %}>Book an Appointment</a></li>
             {% else %}
                 <li><a>My Patients</a></li>
                 <li><a>Past Appointments</a></li>
                 <li><a>Upcoming Appointments</a></li>
             {% endif %}
         </ul>
-    </body>
-</html>
+    </div>
+{% endblock content %}

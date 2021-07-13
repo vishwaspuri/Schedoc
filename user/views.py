@@ -17,7 +17,7 @@ def login_view(request):
             else:
                 return HttpResponseForbidden("<html><head><title>Login Forbidden</title></head><body><h1>The User is deactivated. Please contact customer service.</h1></body></html>")
         else:
-            return redirect(request, 'user.login.html', {
+            return redirect(request, 'user/login.html', {
                 "is_valid": False,
                 "error": "Invalid credentials provided"
             })

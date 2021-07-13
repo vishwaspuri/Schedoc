@@ -1,37 +1,24 @@
-<html>
-    <head>
-        <title>
-            Select Slot
-        </title>
-    </head>
-    <body>
-        <div>
-            <table>
-                <tr>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>2</td>
-                    <td>2</td>
-                    <td>2</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>4</td>
-                    <td>4</td>
-                </tr>
+{% extends 'appointment/base.html' %}
+{% block content %}
+    <div class="container">
+        <h3>Appointment Details:</h3>
+        <ul>
+            <li>Name: Dr. {{ doctor.full_name }}</li>
+            <li>Slot Date: {{ date }}</li>
+        </ul>
+        <h3>Timeslots:</h3>
+        <div class="container">
+            <table class="table">
+                {% for slot in slots %}
+                    {% if forloop.counter0|divisibleby:4 %}<tr>{% endif %}
+                        {% if slot.isFull %}
+                            <td style="background: red" class="border">{{ slot.time }}</td>
+                        {% else %}
+                            <td class="border">{{ slot.time }}</td>
+                        {% endif %}
+                    {% if forloop.counter|divisibleby:4 or forloop.last %}</tr>{% endif %}
+                {% endfor %}
             </table>
-        </div>
-    </body>
-</html>
+        <div>
+    </div>
+{% endblock content %}
