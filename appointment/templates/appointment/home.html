@@ -1,14 +1,25 @@
 {% extends "appointment/base.html" %}
 {% block content %}
+    <br>
     <div class="container">
-        <ul>
-            {% if user.type == 1 %}
-                <li><a href={% url 'appointment:find-doctor' %}>Book an Appointment</a></li>
-            {% else %}
-                <li><a>My Patients</a></li>
-                <li><a>Past Appointments</a></li>
-                <li><a>Upcoming Appointments</a></li>
-            {% endif %}
-        </ul>
+        {% if user.type == 1 %}
+            <a class="btn btn-primary btn-lg btn-block" href={% url 'appointment:find-doctor' %}>Book an Appointment</a>
+            <br>
+        {% endif %}
+        <div>
+            <h3>Upcoming Appointments</h3>
+            {% for appointment in appointments %}
+                <div class="card w-100 bg-light">
+                    <div class="card-body">
+                        <h5 class="card-title">Doctor: Dr. {{ appointment.doctor.full_name }}</h5>
+                        <p class="card-text">
+                            <b>Date & Time</b>: {{ appointment.time }}<br>
+                            <b>Reason for appointment</b>: {{ appointment.reason_for_appointment }}
+                        </p>
+                        <a href="#" class="btn btn-primary">View Appointment</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock content %}

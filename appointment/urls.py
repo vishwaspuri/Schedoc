@@ -3,7 +3,9 @@ from appointment import views
 
 urlpatterns=[
     path('', views.LandingPage.as_view(), name="land"),
-    path('home', views.HomePage.as_view(), name="home"),
+    path('home', views.home, name="home"),
     path('find_doctor', views.find_doctor, name="find-doctor"),
-    path('select_slot/<str:date>/<str:doctor_id>/', views.timeslots, name="select-slots")
+    path('select_slot/<str:date>/<str:doctor_id>', views.timeslots, name="select-slots"),
+    path('create_appointment/<str:date>/<str:doctor_id>/<str:timeslot>', views.create_appointment, name="create-appointment"),
+    path('appointment_history', views.appointment_history, name="appointment-history")
 ]

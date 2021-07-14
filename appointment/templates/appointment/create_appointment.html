@@ -1,0 +1,29 @@
+{% extends "appointment/base.html" %}
+{% block content %}
+    <br>
+    <div class="container">
+        <h3>Appointment Details</h3>
+        <table class="table">
+            <tr>
+                <td>Doctor:</td>
+                <td>{{ doctor.full_name }}</td>
+            </tr>
+            <tr>
+                <td>Appointment Date:</td>
+                <td>{{ date }}</td>
+            </tr>
+            <tr>
+                <td>Appointment Time:</td>
+                <td>{{ time }}</td>
+            </tr>
+        </table>
+        <p>
+        <h3>Reason for appointment:</h3></p>
+        <form action={% url "appointment:create-appointment" doctor_id=doctor.id timeslot=timeslot date=date %} method="POST">
+            {% csrf_token %}
+            <textarea rows="5" style="width: 100%;" name="description" value="Please provide reason for booking appointment"></textarea><br>
+            <input type="hidden" name="next" value="{{ next }}"/>
+            <input type="submit" id="submit" value="Create Appointment">
+        </form>
+    </div>
+{% endblock %}
