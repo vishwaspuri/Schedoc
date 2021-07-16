@@ -79,7 +79,10 @@ def home(request):
     user = request.user
     context = dict()
     context["user"] = user
-    context["appointments"] = Appointment.objects.filter(user=user, time__gte=datetime.datetime.now())
+    if user.type ==1:
+        context["appointments"] = Appointment.objects.filter(user=user, time__gte=datetime.datetime.now())
+    else:
+        context["appointments"] = Appointment.objects.filter(doctor=user, time__gte=datetime.datetime.now())
     return render(request, "appointment/home.html", context=context)
 
 @login_required()
@@ -91,6 +94,20 @@ def appointment_history(request):
     else:
         context["appointments"] = Appointment.objects.filter(doctor=request.user, time__lte=datetime.datetime.now())
     return render(request, "appointment/appointment_history.html", context=context)
+
+@login_required()
+def patient_list(request):
+    context = dict()
+    context["user"] = request.user
+    context["patients"] = User.objects.filter(doctor_appointments__doctor = request.user)
+    return render(request, "appointment/my_patients.html", context=context)
+
+@login_required()
+def view_appointment(request, appointment_id):
+    appointment = Appointment.objects.get(id=appointment_id)
+    context = dict()
+    context["appointment"] = appointment
+    return render(request, "appointment/appointment.html", context=context)
 
 class LandingPage(TemplateView):
     template_name = 'appointment/landing.html'

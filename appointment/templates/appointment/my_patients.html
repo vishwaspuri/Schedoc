@@ -1,0 +1,15 @@
+{% extends "appointment/base.html" %}
+{% block content %}
+    <div class="container">
+        <br>
+        <h3>Patients:</h3>
+        {% for patient in patients %}
+            <div class="card w-75">
+                <div class="card-body">
+                    <h5 class="card-title"><b>Patient Name:</b> {{ patient.full_name }}</h5>
+                    <a href="#" class="btn btn-primary">View More</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

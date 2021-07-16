@@ -11,7 +11,7 @@
                         <b>Date & Time</b>: {{ appointment.time }}<br>
                         <b>Reason for appointment</b>: {{ appointment.reason_for_appointment }}
                     </p>
-                    <a href="#" class="btn btn-primary">View Appointment</a>
+                    <a class="btn btn-primary" href={% url 'appointment:view-appointment' appointment_id=appointment.id %} >View Appointment</a>
                 </div>
             </div>
         {% endfor %}

@@ -1,0 +1,26 @@
+{% extends "appointment/base.html" %}
+{% block content %}
+    <div class="container">
+        <br>
+        <table class="table">
+            <tr>
+                <td><b>Doctor Name: </b></td>
+                <td>Dr. {{ appointment.doctor.full_name }}</td>
+            </tr>
+            <tr>
+                <td><b>Patient Name: </b></td>
+                <td>{{ appointment.user.full_name }}</td>
+            </tr>
+            <tr>
+                <td><b>Appointment Time: </b></td>
+                <td>{{ appointment.time }}</td>
+            </tr>
+            <tr>
+                <td><b>Appointment Reason: </b></td>
+                <td>{{ appointment.reason_for_appointment }}</td>
+            </tr>
+        </table>
+        <a class="btn btn-primary" role="button">Re-schedule</a>&nbsp
+        <a class="btn btn-secondary" role="button">Delete Appointment</a>
+    </div>
+{% endblock content %}
