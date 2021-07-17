@@ -4,12 +4,13 @@
         <br>
         <h3>Patients:</h3>
         {% for patient in patients %}
-            <div class="card w-75">
+            <div class="card w-75 bg-light">
                 <div class="card-body">
                     <h5 class="card-title"><b>Patient Name:</b> {{ patient.full_name }}</h5>
-                    <a href="#" class="btn btn-primary">View More</a>
+                    <a class="btn btn-primary" href={% url "appointment:view-patient" patient_id=patient.id %}>View More</a>
                 </div>
             </div>
+            <br>
         {% endfor %}
     </div>
 {% endblock content %}

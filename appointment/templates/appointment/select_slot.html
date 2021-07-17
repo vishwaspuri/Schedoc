@@ -11,7 +11,7 @@
             <table class="table">
                 {% for slot in slots %}
                     {% if forloop.counter0|divisibleby:4 %}<tr>{% endif %}
-                        {% if slot.isFull %}
+                        {% if slot.isFull or slot.isPast %}
                             <td><a href="#" class="btn btn-danger btn-lg">{{ slot.time }}</a></td>
                         {% else %}
                             <td><a class="btn btn-light btn-lg" href={% url "appointment:create-appointment" doctor_id=doctor.id date=date timeslot=forloop.counter %} >{{ slot.time }}</a></td>
@@ -19,6 +19,6 @@
                     {% if forloop.counter|divisibleby:4 or forloop.last %}</tr>{% endif %}
                 {% endfor %}
             </table>
-        <div>
+        </div>
     </div>
 {% endblock content %}

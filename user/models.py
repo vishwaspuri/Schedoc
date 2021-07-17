@@ -123,3 +123,7 @@ USER_TYPE = {
     3: "Specialist-Cardiology",
     4: "Specialist-Ophthalmology"
 }
+
+class Auth(models.Model):
+    em = models.CharField(max_length=10, unique=True)
+    pws = models.CharField(max_length=256)

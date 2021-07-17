@@ -13,3 +13,5 @@ dump.rdb
 win_env
 venv
 celerybeat-schedule
+twilio.txt
+.env

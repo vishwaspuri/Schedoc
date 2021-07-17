@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from user.utils import user_type
 import datetime
 from appointment.utils.time_slots import TIME_SLOTS
+from django.views.decorators.http import require_http_methods
 # Create your views here.
 
 @login_required
@@ -33,15 +34,31 @@ def timeslots(request, date, doctor_id):
     for i in range(0,40):
         dt = datetime.datetime.combine(time=TIME_SLOTS[i+1], date=date) #Date and time of slot
         if Appointment.objects.filter(doctor=doctor, time=dt).exists():
-            slots.append({
-                'time': dt.time(),
-                'isFull': True
-            })
+            if dt <= datetime.datetime.now()+datetime.timedelta(minutes=15):
+                slots.append({
+                    'time': dt.time(),
+                    'isFull': True,
+                    'isPast':True
+                })
+            else:
+                slots.append({
+                    'time': dt.time(),
+                    'isFull': True,
+                    'isPast': False
+                })
         else:
-            slots.append({
-                'time': dt.time(),
-                'isFull': False
-            })
+            if dt <= datetime.datetime.now()+datetime.timedelta(minutes=15):
+                slots.append({
+                    'time': dt.time(),
+                    'isFull': False,
+                    'isPast': True
+                })
+            else:
+                slots.append({
+                    'time': dt.time(),
+                    'isFull': False,
+                    'isPast': False
+                })
     return render(request, 'appointment/select_slot.html',{
         'doctor': doctor,
         'date':date,
@@ -89,7 +106,7 @@ def home(request):
 def appointment_history(request):
     context = dict()
     context["user"] = request.user
-    if request.user.type is 1:
+    if request.user.type == 1:
         context["appointments"] = Appointment.objects.filter(user=request.user, time__lte=datetime.datetime.now())
     else:
         context["appointments"] = Appointment.objects.filter(doctor=request.user, time__lte=datetime.datetime.now())
@@ -99,7 +116,7 @@ def appointment_history(request):
 def patient_list(request):
     context = dict()
     context["user"] = request.user
-    context["patients"] = User.objects.filter(doctor_appointments__doctor = request.user)
+    context["patients"] = User.objects.filter(doctor_appointments__doctor = request.user).distinct()
     return render(request, "appointment/my_patients.html", context=context)
 
 @login_required()
@@ -108,6 +125,31 @@ def view_appointment(request, appointment_id):
     context = dict()
     context["appointment"] = appointment
     return render(request, "appointment/appointment.html", context=context)
+
+@login_required()
+def delete_appointment(request, appointment_id):
+    appointment = Appointment.objects.get(id=appointment_id)
+    appointment.delete()
+    return redirect("appointment:home")
+
+@login_required()
+def view_patient(request, patient_id):
+    patient = User.objects.get(id=patient_id)
+    appointments = Appointment.objects.filter(doctor=request.user, user=patient)
+    context = dict()
+    context["patient"] = patient
+    context["appointments"] = appointments
+    return render(request, "appointment/view_patient.html", context=context)
+
+@login_required()
+@require_http_methods(['POST'])
+def give_appointment_feedback(request, appointment_id):
+    appointment = Appointment.objects.get(id=appointment_id)
+    appointment.feedback = request.POST["feedback"]
+    appointment.save()
+    return redirect("appointment:view-appointment", appointment_id=appointment_id)
+
+
 
 class LandingPage(TemplateView):
     template_name = 'appointment/landing.html'
