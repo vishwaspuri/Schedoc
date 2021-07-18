@@ -149,6 +149,13 @@ def give_appointment_feedback(request, appointment_id):
     appointment.save()
     return redirect("appointment:view-appointment", appointment_id=appointment_id)
 
+@login_required()
+@require_http_methods(['POST'])
+def give_appointment_prescription(request, appointment_id):
+    appointment = Appointment.objects.get(id=appointment_id)
+    appointment.prescription = request.POST["prescription"]
+    appointment.save()
+    return redirect("appointment:view-appointment", appointment_id=appointment_id)
 
 
 class LandingPage(TemplateView):

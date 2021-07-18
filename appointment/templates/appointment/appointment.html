@@ -1,6 +1,6 @@
 {% extends "appointment/base.html" %}
 {% block content %}
-    <div class="container">
+    <div class="container bg-light border rounded">
         <br>
         <table class="table">
             <tr>
@@ -31,6 +31,12 @@
                     <td>{{ appointment.feedback }}</td>
                 </tr>
             {% endif %}
+            {% if appointment.prescription_provided %}
+                <tr>
+                    <td><b>Prescription:</b></td>
+                    <td>{{ appointment.prescription }}</td>
+                </tr>
+            {% endif %}
         </table>
         {% if appointment.is_past %}
             {% if appointment.payment != 0 and appointment.payment_paid is false %}
@@ -43,6 +49,18 @@
                         <label for="appointment-feedback"><b>Feedback Form:</b></label>
                         <textarea rows="5" style="width: 100%;" name="feedback"
                                   placeholder="Kindly Provide Appointment Feedback"></textarea><br>
+                        <input type="hidden" name="next" value="{{ next }}"/>
+                        <input type="submit" id="submit" value="Submit">
+                    </form>
+                </div>
+            {% endif %}
+            {% if appointment.prescription_provided != True and user.type != 1 %}
+                <div>
+                    <form action={% url "appointment:appointment-prescription" appointment_id=appointment.id %} method="POST">
+                        {% csrf_token %}
+                        <label for="prescription"><b>Prescription Form:</b></label>
+                        <textarea rows="5" style="width: 100%;" name="prescription"
+                                  placeholder="Kindly Provide Patient's Prescription"></textarea><br>
                         <input type="hidden" name="next" value="{{ next }}"/>
                         <input type="submit" id="submit" value="Submit">
                     </form>

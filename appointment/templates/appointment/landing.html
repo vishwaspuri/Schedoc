@@ -1,14 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>Schedoc</title>
-    </head>
-    <body>
-        <h1>Schedoc</h1>
-        <div>
-            <ul>
-                <li><a href={% url 'user:login' %}>Login</a></li>
-                <li><a href={% url 'user:register' %}>Register</a></li>
-            </ul>
-        </div>
-    </body>
+<head>
+    <meta charset="utf-8">
+    <title>Schedoc</title>
+    <link rel="stylesheet" type="text/css" href={% static "appointment/css/landing.css" %}>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+            integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+            integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+            crossorigin="anonymous"></script>
+</head>
+<body scroll="no" style="overflow: hidden" background={% static "appointment/images/pattern.jpg" %}>
+<br><br><br>
+<div class="container bg-light justify-content-center border rounded">
+    <h1 style="text-align: center; font-family: Helvetica;">Welcome to Schedoc</h1>
+    <p style="text-align: center;">Login or Register to book an appointment with us.</p>
+    <div class="d-flex justify-content-center">
+        <a class="btn btn-large btn-primary" href={% url 'user:login' %}>Login</a>&nbsp&nbsp&nbsp&nbsp
+        <a class="btn btn-large btn-primary" href={% url 'user:register' %}>Register</a>&nbsp&nbsp&nbsp
+        <a class="btn btn-large btn-primary" href={% url 'user:otp' %}>OTP Login</a>&nbsp&nbsp&nbsp&nbsp
+    </div>
+    <br><br>
+</div>
+
+</body>
 </html>

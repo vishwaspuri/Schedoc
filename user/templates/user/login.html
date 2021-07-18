@@ -1,3 +1,4 @@
+{% load static %}
 <html>
 <head>
     <title>Login</title>
@@ -12,7 +13,7 @@
             integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
             crossorigin="anonymous"></script>
 </head>
-<body>
+<body background={% static "user/images/pattern.jpg" %}>
 <div class="Container">
     <br>
     <div>
@@ -22,7 +23,7 @@
         <br>
         <form id='login-form' action="{% url 'user:login' %}" method="POST">
             {% csrf_token %}
-            <input type="email" placeholder="email" name="email" required><br>
+            <input type="email" placeholder="email" name="email" required><br><br>
             <input type="password" placeholder="password" name="password" required><br>
             {% if not form.is_valid %}
                 <p>

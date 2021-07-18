@@ -15,3 +15,5 @@ venv
 celerybeat-schedule
 twilio.txt
 .env
+sendgrid.env
+scripts

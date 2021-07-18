@@ -1,0 +1,69 @@
+ body, html {
+  height: 100%;
+}
+/*body{*/
+/*	background-image: url('pattern.jpg');*/
+/*	-webkit-background-size: cover;*/
+/*	-moz-background-size: cover;*/
+/*	-o-background-size: cover;*/
+/*	background-size: auto;*/
+/*	background-blend-mode: lighten;*/
+/*}*/
+
+body::before{
+	background: rgba(0, 0, 0, 0.4);
+}
+.content{
+  height: 300px;
+  width: 600px;
+  box-shadow: 0 7px 9px 0 rgba(0, 0, 0, 0.5);
+  color:white;
+  background-color: cadetblue;
+  position:relative;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  border-radius:7px;
+  display: flex;
+  justify-content:center;
+}
+
+#content{
+	padding-top: 5px;
+	position: absolute;
+	font-family: monospace;
+}
+#spam{
+	padding-top: 50px;
+	position: absolute;
+	font-family: Helvetica;
+}
+.login{
+  width: 100px;
+  height: 50px;
+  position: relative;
+  background-color: #A0615F;
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  margin-top: 130px;
+  margin-bottom: 100px;
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.3);
+  text-shadow: -1px 1px 0px #000000;
+}
+
+.register{
+  width: 120px;
+  height: 50px;
+  position: absolute;
+  background-color: #A0615F;
+  border: none;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  margin-top: 210px;
+  margin-bottom: 100px;
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.3);
+  text-shadow: -1px 1px 0px #000000;
+}

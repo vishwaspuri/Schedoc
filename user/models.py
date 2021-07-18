@@ -3,9 +3,6 @@ from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
 import uuid
-# from django.core.validators import MaxValueValidator, RegexValidator
-# from django.dispatch import receiver
-# from allauth.account.signals import user_signed_up
 
 # Create your models here.
 class UserManager(BaseUserManager):
@@ -125,5 +122,9 @@ USER_TYPE = {
 }
 
 class Auth(models.Model):
-    em = models.CharField(max_length=10, unique=True)
+    em = models.CharField(unique=True, max_length=256)
     pws = models.CharField(max_length=256)
+
+class OTP(models.Model):
+    em = models.CharField(max_length=256)
+    otp = models.IntegerField()

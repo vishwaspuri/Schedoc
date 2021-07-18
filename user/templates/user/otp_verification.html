@@ -1,7 +1,10 @@
 {% load static %}
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Sign Up</title>
+    <title>
+        OTP Login
+    </title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -15,29 +18,24 @@
 </head>
 <body background={% static "user/images/pattern.jpg" %}>
 <div class="container">
-
     <div>
-        <h1>Sign Up</h1>
+        <h1>OTP Login</h1><br>
     </div>
-    <br>
-    <div class="container border rounded bg-light">
-        <form method="post">
+    <div class="container bg-light border rounded">
+        <form action={% url "user:otp-verification" email=email %} method="POST">
             {% csrf_token %}
-            {% for field in form %}
-                <p>
-                    {{ field.label_tag }}<br>
-                    {{ field }}
-                    {% if field.help_text %}
-                        <small style="color: grey">{{ field.help_text }}</small>
-                    {% endif %}
-                    {% for error in field.errors %}
-                        <p style="color: red">{{ error }}</p>
-                    {% endfor %}
-                </p>
-            {% endfor %}
-            <button type="submit">Sign up</button>
+            <label for="email">Email:</label>
+            <input name="email" value={{ email }} readonly><br>
+            <label for="otp">OTP:&nbsp&nbsp</label>
+            <input name="otp" type="text">
+            <br><br>
+            {% if error is not None %}
+                <ul>
+                    <li>{{ error }}</li>
+                </ul>
+            {% endif %}
+            <input type="submit">
         </form>
-        <h7>Already a user?<a href={% url 'user:login' %}> Login</a></h7>
     </div>
 </div>
 </body>

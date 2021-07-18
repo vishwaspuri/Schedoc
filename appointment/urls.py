@@ -12,5 +12,6 @@ urlpatterns=[
     path('view_appointment/<int:appointment_id>', views.view_appointment, name="view-appointment"),
     path('delete_appointment/<int:appointment_id>', views.delete_appointment, name="delete-appointment"),
     path('my_patients/<str:patient_id>', views.view_patient, name="view-patient"),
-    path('appointment_feedback/<int:appointment_id>', views.give_appointment_feedback, name="appointment-feedback")
+    path('appointment_feedback/<int:appointment_id>', views.give_appointment_feedback, name="appointment-feedback"),
+    path('appointment_prescription/<int:appointment_id>', views.give_appointment_prescription, name="appointment-prescription")
 ]

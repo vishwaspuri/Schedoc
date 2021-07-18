@@ -21,6 +21,10 @@ class Appointment(models.Model):
         if self.feedback is None:
             return False
         return True
+    def prescription_provided(self):
+        if self.prescription is None:
+            return False
+        return True
 
     def is_past(self):
         if tz.localize(datetime.datetime.now()) > self.time:

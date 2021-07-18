@@ -1,13 +1,16 @@
 {% extends "appointment/base.html" %}
 {% block content %}
     <br>
-    <div class="container">
+    <div class="container bg-light border rounded">
         {% if user.type == 1 %}
             <a class="btn btn-primary btn-lg btn-block" href={% url 'appointment:find-doctor' %}>Book an Appointment</a>
             <br>
         {% endif %}
         <div>
             <h3>Upcoming Appointments</h3>
+            {% if not appointments.count %}
+                <p>You have no upcoming appointments</p>
+            {% endif %}
             {% for appointment in appointments %}
                 <div class="card w-100 bg-light">
                     <div class="card-body">
