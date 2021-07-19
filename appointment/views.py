@@ -67,9 +67,6 @@ def timeslots(request, date, doctor_id):
 
 @login_required()
 def create_appointment(request, date, doctor_id, timeslot):
-    print(date)
-    print(doctor_id)
-    print(TIME_SLOTS[int(timeslot)])
     doctor = User.objects.get(id=doctor_id)
     if request.method == "POST":
         user = request.user
@@ -154,6 +151,56 @@ def give_appointment_feedback(request, appointment_id):
 def give_appointment_prescription(request, appointment_id):
     appointment = Appointment.objects.get(id=appointment_id)
     appointment.prescription = request.POST["prescription"]
+    appointment.save()
+    return redirect("appointment:view-appointment", appointment_id=appointment_id)
+
+def select_slot_for_update(request, appointment_id):
+    appointment = Appointment.objects.get(id=appointment_id)
+    doctor = appointment.doctor
+    date = appointment.time.date()
+    slots = []
+    for i in range(0, 40):
+        dt = datetime.datetime.combine(time=TIME_SLOTS[i + 1], date=date)  # Date and time of slot
+        if Appointment.objects.filter(doctor=doctor, time=dt).exists():
+            if dt <= datetime.datetime.now() + datetime.timedelta(minutes=15):
+                slots.append({
+                    'time': dt.time(),
+                    'isFull': True,
+                    'isPast': True
+                })
+            else:
+                slots.append({
+                    'time': dt.time(),
+                    'isFull': True,
+                    'isPast': False
+                })
+        else:
+            if dt <= datetime.datetime.now() + datetime.timedelta(minutes=15):
+                slots.append({
+                    'time': dt.time(),
+                    'isFull': False,
+                    'isPast': True
+                })
+            else:
+                slots.append({
+                    'time': dt.time(),
+                    'isFull': False,
+                    'isPast': False
+                })
+    return render(request, 'appointment/update_slot.html', {
+        'doctor': doctor,
+        'appointment':appointment,
+        'date': date,
+        'slots': slots
+    })
+
+@login_required()
+def update_appointment_slot(request, appointment_id, timeslot):
+    appointment = Appointment.objects.get(id=appointment_id)
+    date = appointment.time.date()
+    time = TIME_SLOTS[timeslot]
+    dt = datetime.datetime.combine(date=date, time=time)
+    appointment.time = dt
     appointment.save()
     return redirect("appointment:view-appointment", appointment_id=appointment_id)
 

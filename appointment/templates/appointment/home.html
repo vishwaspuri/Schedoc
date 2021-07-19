@@ -1,7 +1,7 @@
 {% extends "appointment/base.html" %}
 {% block content %}
-    <br>
     <div class="container bg-light border rounded">
+    <br>
         {% if user.type == 1 %}
             <a class="btn btn-primary btn-lg btn-block" href={% url 'appointment:find-doctor' %}>Book an Appointment</a>
             <br>

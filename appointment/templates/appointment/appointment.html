@@ -67,7 +67,7 @@
                 </div>
             {% endif %}
         {% else %}
-            <a class="btn btn-primary" role="button">Re-schedule</a>&nbsp
+            <a class="btn btn-primary" role="button" href={% url "appointment:select-updated-slot" appointment_id=appointment.id %}>Re-schedule</a>&nbsp
             <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#deleteAppointmentModal">
                 Delete Appointment
             </button>
