@@ -53,6 +53,7 @@ def get_email_and_generate_otp(request):
         email = request.POST["email"]
         try:
             user = User.objects.get(email=email)
+            print(0)
             res, _ = send_mail(number, email)
             if res:
                 otp = OTP(em=email, otp=number)
@@ -60,7 +61,6 @@ def get_email_and_generate_otp(request):
                 return redirect("user:otp-verification", email=email)
             else:
                 return render(request, "user/otp.html", {"error": ["Couldn't send OTP."]})
-            # print(otp)
         except:
             return render(request, "user/otp.html", {"errors": ["User does not exist"]})
     return render(request, "user/otp.html")
@@ -70,11 +70,7 @@ def otp_verification(request, email):
     if request.method == "POST":
         otp = request.POST["otp"]
         latest_otp = OTP.objects.filter(em=email).last()
-        print(0)
-        print(otp)
-        print(latest_otp.otp)
         if str(otp) == str(latest_otp.otp):
-            print(1)
             auth = Auth.objects.get(em=email)
             user = authenticate(username=email, password=auth.pws)
             if user.is_active:
