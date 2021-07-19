@@ -3,10 +3,11 @@ from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
 import uuid
-
+from django.dispatch import receiver
+from allauth.account.signals import user_signed_up
 # Create your models here.
 class UserManager(BaseUserManager):
-    def create_user(self, email, full_name, ph_number, password=None):
+    def create_user(self, email, full_name, password=None):
         """
         Creates and saves a User with the given email and password.
         """
@@ -16,14 +17,13 @@ class UserManager(BaseUserManager):
         user = self.model(
             email=self.normalize_email(email),
             full_name=full_name,
-            ph_number=ph_number
         )
 
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_staffuser(self, email, full_name, ph_number, password):
+    def create_staffuser(self, email, full_name, password):
         """
         Creates and saves a staff user with the given email and password.
         """
@@ -31,13 +31,12 @@ class UserManager(BaseUserManager):
             email,
             full_name=full_name,
             password=password,
-            ph_number=ph_number
         )
         user.staff = True
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, full_name, ph_number, password):
+    def create_superuser(self, email, full_name, password):
         """
         Creates and saves a superuser with the given email and password.
         """
@@ -45,7 +44,6 @@ class UserManager(BaseUserManager):
             email,
             full_name=full_name,
             password=password,
-            ph_number=ph_number
         )
         user.staff = True
         user.admin = True
@@ -59,12 +57,12 @@ class User(AbstractBaseUser):
     active       = models.BooleanField(default=True)
     staff        = models.BooleanField(default=False) # a admin user; non super-user
     admin        = models.BooleanField(default=False) # a superuser
-    ph_number    = models.CharField(max_length=10)
+    ph_number    = models.CharField(max_length=10, default="")
     type         = models.IntegerField(verbose_name=None, default=1)
     # notice the absence of a "Password field", that is built in.
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['full_name', 'ph_number'] # Email & Password are required by default.
+    REQUIRED_FIELDS = ['full_name'] # Email & Password are required by default.
     def get_full_name(self):
         # The user is identified by their email address
         return self.full_name
@@ -112,6 +110,12 @@ class User(AbstractBaseUser):
         return user_dict
 
     objects = UserManager()
+
+@receiver(user_signed_up)
+def populate_soc_login_data(sociallogin,user,**kwargs):
+    if sociallogin.account.provider == 'google':
+        user.full_name=sociallogin.account.extra_data['name']
+        user.save()
 
 
 USER_TYPE = {

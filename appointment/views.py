@@ -26,6 +26,8 @@ def find_doctor(request):
         return render(request, 'appointment/find_doctor.html', {
             "resultPresent": False
         })
+
+
 @login_required()
 def timeslots(request, date, doctor_id):
     doctor = User.objects.get(id=doctor_id)
