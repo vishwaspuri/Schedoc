@@ -6,7 +6,11 @@
         {% for appointment in appointments %}
             <div class="card w-100 bg-light">
                 <div class="card-body">
-                    <h5 class="card-title">Doctor: Dr. {{ appointment.doctor.full_name }}</h5>
+                    {% if user.type == 1 %}
+                            <h5 class="card-title">Doctor: Dr. {{ appointment.doctor.full_name }}</h5>
+                        {% else %}
+                            <h5 class="card-title">Patient: {{ appointment.user.full_name }}</h5>
+                        {% endif %}
                     <p class="card-text">
                         <b>Date & Time</b>: {{ appointment.time }}<br>
                         <b>Reason for appointment</b>: {{ appointment.reason_for_appointment }}

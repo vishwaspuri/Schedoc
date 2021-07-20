@@ -19,3 +19,5 @@ sendgrid.env
 scripts
 static
 schedoc.pem
+mailjet.txt
+
