@@ -206,6 +206,20 @@ def update_appointment_slot(request, appointment_id, timeslot):
     appointment.save()
     return redirect("appointment:view-appointment", appointment_id=appointment_id)
 
+@login_required()
+def payment_made(request, appointment_id):
+    appointment = Appointment.objects.get(id=appointment_id)
+    appointment.payment_paid = True
+    appointment.save()
+    return redirect("appointment:view-appointment", appointment_id=appointment_id)
+
+@login_required()
+@require_http_methods(['POST'])
+def add_payment(request, appointment_id):
+    appointment = Appointment.objects.get(id=appointment_id)
+    appointment.payment = request.POST["amount"]
+    appointment.save()
+    return redirect("appointment:view-appointment", appointment_id=appointment_id)
 
 class LandingPage(TemplateView):
     template_name = 'appointment/landing.html'

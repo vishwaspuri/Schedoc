@@ -24,6 +24,16 @@
                     <td><b>Payment: </b></td>
                     <td>₹ {{ appointment.payment }}</td>
                 </tr>
+                {% if appointment.payment != 0 %}
+                    <tr>
+                        <td><b>Payment Status:</b></td>
+                        {% if appointment.payment_paid %}
+                            <td>Paid</td>
+                        {% else %}
+                            <td>To be paid</td>
+                        {% endif %}
+                    </tr>
+                {% endif %}
             {% endif %}
             {% if appointment.feedback_provided %}
                 <tr>
@@ -39,8 +49,20 @@
             {% endif %}
         </table>
         {% if appointment.is_past %}
-            {% if appointment.payment != 0 and appointment.payment_paid is false %}
-                <a class="btn btn-primary" role="button">Make Payment</a>
+{#            {% if appointment.payment != 0 and appointment.payment_paid is false %}#}
+{#                <a class="btn btn-primary" role="button">Make Payment</a>#}
+{#            {% endif %}#}
+            {% if appointment.payment == 0 and user.type != 1  %}
+                <form action={% url "appointment:add-payment" appointment_id=appointment.id %} method="POST">
+                    {% csrf_token %}
+                    <label for="amount">Add Fees:</label>
+                    <input name="amount" type="number">
+                    <input type="hidden" name="next" value="{{ next }}"/>
+                    <input type="submit" value="Update" id="submit"><br><br>
+                </form><br>
+            {% endif %}
+            {% if appointment.payment != 0 and user.type != 1  %}
+                <a class="btn btn-primary" href={% url "appointment:payment-made" appointment_id=appointment.id %}>Payment Done</a>
             {% endif %}
             {% if appointment.feedback_provided != True and user.type == 1 %}
                 <div>
@@ -95,5 +117,6 @@
                 </div>
             </div>
         {% endif %}
+    <br><br>
     </div>
 {% endblock content %}

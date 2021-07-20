@@ -18,6 +18,7 @@
 </head>
 <body scroll="no" style="overflow: hidden" background={% static "appointment/images/pattern.jpg" %}>
 <br><br><br>
+
 <div class="container bg-light justify-content-center border rounded">
     <h1 style="text-align: center; font-family: Helvetica;">Welcome to <a href={% url "admin:login" %}>Schedoc</a></h1>
     <p style="text-align: center;">Login or Register to book an appointment with us.</p>
@@ -25,6 +26,7 @@
         <a class="btn btn-large btn-primary" href={% url 'user:login' %}>Login</a>&nbsp&nbsp&nbsp&nbsp
         <a class="btn btn-large btn-primary" href={% url 'user:register' %}>Register</a>&nbsp&nbsp&nbsp
         <a class="btn btn-large btn-primary" href={% url 'user:otp' %}>OTP Login</a>&nbsp&nbsp&nbsp&nbsp
+        <a class="btn btn-large btn-primary" href="https://github.com/vishwaspuri/Schedoc">Source Code</a>&nbsp&nbsp&nbsp&nbsp
     </div>
     <br><br>
 </div>

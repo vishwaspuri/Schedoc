@@ -1,40 +1,36 @@
 {% extends "appointment/base.html" %}
 {% block content %}
     <div class="container bg-light border rounded">
-        {% if user.type != 1 %}
-            <br>
-            <h5>Hello, Doctor!</h5>
-        {% endif %}
+        <br>
+        <h3>Doctor Profile</h3>
         <table class="table">
             <tr>
                 <td>Name:</td>
-                <td>{{ user.full_name }}</td>
+                <td>{{ doctor.full_name }}</td>
             </tr>
             <tr>
                 <td>Email:</td>
-                <td>{{ user.email }}</td>
+                <td>{{ doctor.email }}</td>
             </tr>
             <tr>
                 <td>Phone Number:</td>
-                <td>{{ user.ph_number }}</td>
+                <td>{{ doctor.ph_number }}</td>
             </tr>
             <tr class=>
-                {% if user.type == 1 %}
-                    <td>User Type:</td>
+                {% if doctor.type == 1 %}
+                    <td>doctor Type:</td>
                     <td>Patient</td>
-                {% elif user.type == 2 %}
+                {% elif doctor.type == 2 %}
                     <td>Speciality:</td>
                     <td>Physician</td>
-                {% elif user.type == 3 %}
+                {% elif doctor.type == 3 %}
                     <td>Speciality:</td>
                     <td>Cardiology</td>
-                {% elif user.type == 4 %}
+                {% elif doctor.type == 4 %}
                     <td>Speciality:</td>
                     <td>Ophthalmology</td>
                 {% endif %}
             </tr>
         </table>
-        &nbsp&nbsp
-        <a type="button" class="btn btn-primary" href={% url "user:update-user" %}>Update</a><br><br>
     </div>
 {% endblock content %}

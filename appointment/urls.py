@@ -15,5 +15,7 @@ urlpatterns=[
     path('appointment_feedback/<int:appointment_id>', views.give_appointment_feedback, name="appointment-feedback"),
     path('appointment_prescription/<int:appointment_id>', views.give_appointment_prescription, name="appointment-prescription"),
     path('select_updated_slot/<int:appointment_id>', views.select_slot_for_update, name="select-updated-slot"),
-    path('update_slot/<int:appointment_id>/<int:timeslot>', views.update_appointment_slot, name="update-timeslot")
+    path('update_slot/<int:appointment_id>/<int:timeslot>', views.update_appointment_slot, name="update-timeslot"),
+    path('payment_made/<int:appointment_id>', views.payment_made, name="payment-made"),
+    path('add_payment/<int:appointment_id>', views.add_payment, name="add-payment")
 ]

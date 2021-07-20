@@ -92,6 +92,24 @@ def otp_verification(request, email):
         "email": email
     })
 
+@login_required()
+def update_user(request):
+    user = request.user
+    if request.method == "POST":
+        new_full_name = request.POST["full_name"]
+        new_ph_number = request.POST["ph_number"]
+        if str(user.ph_number) != str(new_ph_number) and str(new_ph_number) != "":
+            user.ph_number =  new_ph_number
+        if str(user.full_name) != str(new_full_name) and str(new_full_name) != "":
+            user.full_name =  new_full_name
+        user.save()
+        return redirect("user:profile")
+    return render(request, "user/update_user.html")
+
+@login_required()
+def view_doctor(request, doctor_id):
+    doctor = User.objects.get(id=doctor_id)
+    return render(request, "user/doctor.html", {"doctor":doctor})
 
 @login_required
 def my_profile(request):

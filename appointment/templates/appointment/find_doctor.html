@@ -24,11 +24,12 @@
                 <h3>Available {{ speciality }}s:</h3>
                 {% for doctor in doctors %}
                     <div class="container bg-light border rounded">
-                        Name: Dr. {{ doctor.full_name }}<br>
+                        Name: <a href={% url "user:view-doctor" doctor_id=doctor.id %}> Dr. {{ doctor.full_name }}</a><br>
                         <a href={% url 'appointment:select-slots' date=appointment_date doctor_id=doctor.id %}>Book Slot</a>
                     </div>
                 {% endfor %}
             {% endif %}
         </div>
+        <br>
     </div>
 {% endblock content %}

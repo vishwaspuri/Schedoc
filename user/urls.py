@@ -13,5 +13,7 @@ urlpatterns = [
     path("profile", views.my_profile, name="profile"),
     path("otp", views.get_email_and_generate_otp, name="otp"),
     path("otp_verification/<str:email>", views.otp_verification, name="otp-verification"),
-    path("send-otp", api.send_otp, name="send-otp")
+    path("send-otp", api.send_otp, name="send-otp"),
+    path("update_user", views.update_user, name="update-user"),
+    path("view_doctor/<str:doctor_id>", views.view_doctor, name="view-doctor")
 ]
